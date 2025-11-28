@@ -47,6 +47,21 @@ services:
     networks:
       - smarttax_network
 
+  phpmyadmin:
+    image: phpmyadmin:latest
+    container_name: smarttax_phpmyadmin
+    ports:
+      - "8081:80"
+    environment:
+      - PMA_HOST=mariadb
+      - PMA_USER=smarttax_user
+      - PMA_PASSWORD=smarttax_pass
+      - PMA_ROOT_PASSWORD=root_password
+    depends_on:
+      - mariadb
+    networks:
+      - smarttax_network
+
 volumes:
   mariadb_data:
 

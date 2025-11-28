@@ -7,7 +7,6 @@
 </head>
 <body>
 	<h1>SmartTax</h1>
-	<p>Welcome — PHP is working.</p>
-	<p>PHP version: <?php echo phpversion(); ?></p>
+	<p>Welcome to SmartTax — A Self-Assessment Tool for UK Freelancers.</p>
 </body>
 </html>
