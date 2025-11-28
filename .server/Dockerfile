@@ -13,20 +13,19 @@ RUN apt-get update && apt-get install -y \
     unzip \
     && rm -rf /var/lib/apt/lists/*
 
-# Install PHP extensions
-RUN docker-php-ext-install pdo_mysql mysqli gd xml mbstring
+# Configure and install PHP extensions
 RUN docker-php-ext-configure gd --with-freetype --with-jpeg
+RUN docker-php-ext-install pdo_mysql mysqli gd xml mbstring
 
-# Install Composer
+# Install Composer from the official composer image
 COPY --from=composer:latest /usr/bin/composer /usr/bin/composer
 
-# Set working directory
+# Copy application code from the repository's `src` directory
+COPY src/ /var/www/html
+
 WORKDIR /var/www/html
 
-# Copy application code
-COPY . .
-
-# Expose port 9000 for PHP-FPM
+# Expose PHP-FPM port
 EXPOSE 9000
 
 CMD ["php-fpm"]
