@@ -1,0 +1,55 @@
+version: '3.8'
+
+services:
+  php:
+    build:
+      context: ./src
+      dockerfile: Dockerfile
+    container_name: smarttax_php
+    volumes:
+      - ./src:/var/www/html
+    environment:
+      - DB_HOST=mariadb
+      - DB_DATABASE=smarttax
+      - DB_USERNAME=smarttax_user
+      - DB_PASSWORD=smarttax_pass
+    depends_on:
+      - mariadb
+    networks:
+      - smarttax_network
+
+  nginx:
+    image: nginx:alpine
+    container_name: smarttax_nginx
+    ports:
+      - "80:80"
+      - "443:443"
+    volumes:
+      - ./src:/var/www/html
+      - ./src/nginx.conf:/etc/nginx/conf.d/default.conf
+    depends_on:
+      - php
+    networks:
+      - smarttax_network
+
+  mariadb:
+    image: mariadb:latest
+    container_name: smarttax_mariadb
+    ports:
+      - "3306:3306"
+    environment:
+      - MYSQL_ROOT_PASSWORD=root_password
+      - MYSQL_DATABASE=smarttax
+      - MYSQL_USER=smarttax_user
+      - MYSQL_PASSWORD=smarttax_pass
+    volumes:
+      - mariadb_data:/var/lib/mysql
+    networks:
+      - smarttax_network
+
+volumes:
+  mariadb_data:
+
+networks:
+  smarttax_network:
+    driver: bridge
