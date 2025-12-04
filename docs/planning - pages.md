@@ -16,11 +16,17 @@ Purpose: allow returning customers to securely access their account and dashboar
 - "Sign in" button
 - "Forgot password" link (password reset flow)
 - Link to Sign Up (if applicable)
-- Behaviour and UX:
+
+Behaviour and UX:
 - Inline validation for required fields and basic format
 - Clear, friendly error messages (invalid credentials, locked account)
 - Optional two-factor / MFA prompt when enabled
 - After successful sign-in: redirect to user Dashboard
+
+Benefits
+- See your dashboard and filings
+- Track payments and deadlines
+- Save estimates securely
 
 ## FAQ
 
@@ -54,6 +60,26 @@ Purpose: build trust and explain who runs SmartTax and why.
 - Author / team credentials (course, university, contact)
 - High-level tech stack and security reassurance (data handling, backups)
 - Links to terms, privacy policy, and HMRC integration notes
+
+## Terms & Conditions
+
+Purpose: outline the legal terms for using SmartTax.
+
+- Key elements:
+- Clear sections: User responsibilities, Data usage, Liability disclaimer
+- Last updated date 
+- Link to privacy policy
+
+## Privacy Policy
+
+Purpose: inform customers how their data is collected, used, and protected.
+
+- Key elements:
+- Data collection details (what data, how collected)
+- Data usage purposes (service provision, improvements)
+- Data sharing (third parties, HMRC)  
+- User rights (access, deletion, corrections)
+- Contact info for privacy concerns
 
 ## News / Updates
 

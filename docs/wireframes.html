@@ -1,0 +1,516 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>SmartTax Wireframes</title>
+  <link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@400;600;700&family=IBM+Plex+Mono:wght@500&display=swap" rel="stylesheet">
+  <style>
+    :root {
+      --bg: #f8f5ee;
+      --card: #ffffff;
+      --ink: #1e1b16;
+      --muted: #6f665c;
+      --accent: #14665c;
+      --outline: #c9c1b6;
+      --shadow: 0 12px 40px rgba(0, 0, 0, 0.08);
+      --mono: "IBM Plex Mono", ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, "Liberation Mono", "Courier New", monospace;
+      --sans: "Space Grotesk", "Segoe UI", "Helvetica Neue", Arial, sans-serif;
+    }
+    * { box-sizing: border-box; }
+    body {
+      margin: 0;
+      font-family: var(--sans);
+      background: radial-gradient(circle at 20% 20%, rgba(20, 102, 92, 0.08), transparent 30%),
+                  radial-gradient(circle at 80% 10%, rgba(124, 84, 40, 0.08), transparent 26%),
+                  var(--bg);
+      color: var(--ink);
+      line-height: 1.5;
+      padding-bottom: 48px;
+    }
+    h1, h2, h3 {
+      margin: 0 0 12px;
+      letter-spacing: -0.01em;
+    }
+    h1 { font-size: 28px; }
+    h2 { font-size: 22px; }
+    h3 { font-size: 17px; }
+    p { margin: 0 0 10px; color: var(--muted); }
+    .top {
+      position: sticky;
+      top: 0;
+      z-index: 10;
+      backdrop-filter: blur(10px);
+      background: rgba(248, 245, 238, 0.95);
+      border-bottom: 1px solid var(--outline);
+      padding: 14px 20px;
+      display: flex;
+      align-items: center;
+      gap: 18px;
+      flex-wrap: wrap;
+    }
+    .brand {
+      font-weight: 700;
+      color: var(--ink);
+      letter-spacing: 0.01em;
+    }
+    nav {
+      display: flex;
+      gap: 10px;
+      flex-wrap: wrap;
+    }
+    nav a {
+      text-decoration: none;
+      color: var(--ink);
+      padding: 8px 12px;
+      border: 1px solid var(--outline);
+      border-radius: 12px;
+      background: rgba(255, 255, 255, 0.7);
+      transition: all 0.15s ease;
+      font-size: 13px;
+    }
+    nav a:hover {
+      border-color: var(--accent);
+      color: var(--accent);
+      box-shadow: var(--shadow);
+    }
+    .page {
+      padding: 26px 20px;
+      max-width: 1240px;
+      margin: 0 auto;
+    }
+    .canvas {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+      gap: 14px;
+      margin-top: 12px;
+    }
+    .panel {
+      background: linear-gradient(135deg, rgba(255, 255, 255, 0.96), rgba(255, 255, 255, 0.9));
+      border: 2px dashed var(--outline);
+      border-radius: 16px;
+      padding: 16px;
+      box-shadow: var(--shadow);
+      min-height: 120px;
+    }
+    .header-bar, .cta, .input, .list-item, .pill, .badge, .table, .chart, .stacked {
+      background: #fffdfa;
+      border: 0;
+      border-radius: 12px;
+      padding: 10px;
+      color: var(--muted);
+      font-size: 13px;
+      box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.4);
+    }
+    .header-bar { font-weight: 700; color: var(--ink); }
+    .cta { background: rgba(20, 102, 92, 0.1); color: var(--ink); font-weight: 600; text-align: center; }
+    .input { display: flex; flex-direction: column; gap: 6px; }
+    .input .header-bar, .input .table { box-shadow: none; }
+    .input span { font-size: 12px; color: var(--muted); }
+    .list { display: grid; gap: 8px; }
+    .list-row { display: flex; gap: 10px; flex-wrap: wrap; }
+    .pill { padding: 6px 10px; box-shadow: none; }
+    .badge { display: inline-block; padding: 4px 10px; border-radius: 999px; box-shadow: none; }
+    .table { min-height: 100px; box-shadow: none; }
+    .chart { min-height: 140px; display: grid; place-items: center; font-family: var(--mono); box-shadow: none; }
+    .grid-two { display: grid; grid-template-columns: repeat(auto-fit, minmax(200px, 1fr)); gap: 10px; }
+    .grid-three { display: grid; grid-template-columns: repeat(auto-fit, minmax(180px, 1fr)); gap: 10px; }
+    .status {
+      display: inline-flex;
+      align-items: center;
+      gap: 6px;
+      font-size: 12px;
+      color: var(--accent);
+      font-weight: 700;
+    }
+    .mono { font-family: var(--mono); font-size: 12px; }
+    .note { color: var(--muted); font-size: 12px; }
+    .stacked { display: grid; gap: 10px; }
+    .divider { border-top: 1px dashed var(--outline); margin: 10px 0; }
+    @media (max-width: 640px) {
+      .top { position: static; }
+      nav a { font-size: 12px; }
+    }
+  </style>
+</head>
+<body>
+  <header class="top">
+    <div class="brand">SmartTax Wireframes</div>
+    <nav>
+      <a href="#sign-in">Sign In</a>
+      <a href="#faq">FAQ</a>
+      <a href="#contact">Contact</a>
+      <a href="#about">About</a>
+      <a href="#news">News</a>
+      <a href="#dashboard">Tax Dashboard</a>
+      <a href="#income-expenses">Income &amp; Expenses</a>
+      <a href="#calculator">Tax Calculator</a>
+      <a href="#filing">Self-Assessment</a>
+      <a href="#payments">Payments</a>
+      <a href="#reports">Tax History</a>
+    </nav>
+  </header>
+
+  <section id="sign-in" class="page">
+    <h1>Sign In</h1>
+    <div class="canvas">
+      <div class="panel">
+        <div class="header-bar">Sign in to SmartTax</div>
+        <div class="input">
+          <span>Email or username</span>
+          <div class="header-bar">input</div>
+        </div>
+        <div class="input">
+          <span>Password</span>
+          <div class="header-bar">input</div>
+        </div>
+        <div class="list-row">
+          <div class="pill">Remember me</div>
+          <div class="pill">Forgot password?</div>
+        </div>
+        <div class="cta">Sign In</div>
+        <div class="note">Inline validation + clear errors</div>
+        <div class="divider"></div>
+        <div class="list-row">
+          <div class="badge">Two-factor prompt</div>
+          <div class="badge">Create account</div>
+        </div>
+      </div>
+      <div class="panel">
+        <div class="header-bar">Benefits</div>
+        <div class="list">
+          <div class="list-item">See your dashboard and filings</div>
+          <div class="list-item">Track payments and deadlines</div>
+          <div class="list-item">Save estimates securely</div>
+        </div>
+        <div class="divider"></div>
+        <div class="note mono">After sign-in -> redirect to dashboard</div>
+      </div>
+    </div>
+  </section>
+
+  <section id="faq" class="page">
+    <h1>FAQ</h1>
+    <div class="canvas">
+      <div class="panel">
+        <div class="header-bar">Search common questions</div>
+        <div class="input">
+          <span>Keyword search</span>
+          <div class="header-bar">search box</div>
+        </div>
+        <div class="divider"></div>
+        <div class="list-row">
+          <div class="pill">Account</div>
+          <div class="pill">Tax Estimates</div>
+          <div class="pill">Payments</div>
+          <div class="pill">Security</div>
+        </div>
+        <div class="stacked">
+          <div class="list-item">Accordion question -> Expand answer</div>
+          <div class="list-item">Accordion question -> Expand answer</div>
+          <div class="list-item">Accordion question -> Expand answer</div>
+        </div>
+        <div class="divider"></div>
+        <div class="list-row">
+          <div class="badge">Contact support</div>
+          <div class="badge">Updated: 2025 tax year</div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <section id="contact" class="page">
+    <h1>Contact</h1>
+    <div class="canvas">
+      <div class="panel">
+        <div class="header-bar">Send us a note</div>
+        <div class="grid-two">
+          <div class="input"><span>Name</span><div class="header-bar">input</div></div>
+          <div class="input"><span>Email</span><div class="header-bar">input</div></div>
+        </div>
+        <div class="input"><span>Subject</span><div class="header-bar">input</div></div>
+        <div class="input"><span>Message</span><div class="table">long text</div></div>
+        <div class="list-row">
+          <div class="pill">Attach file</div>
+          <div class="pill">Anti-spam check</div>
+        </div>
+        <div class="cta">Send message</div>
+        <div class="note">Privacy: how we use your data</div>
+      </div>
+      <div class="panel">
+        <div class="header-bar">Support details</div>
+        <div class="list">
+          <div class="list-item">support@smarttax.example</div>
+          <div class="list-item">Phone: 0800 000 000</div>
+          <div class="list-item">Hours: Mon-Fri, 9am-6pm</div>
+          <div class="list-item">Response time: ~1 business day</div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <section id="about" class="page">
+    <h1>About</h1>
+    <div class="canvas">
+      <div class="panel">
+        <div class="header-bar">Mission &amp; promise</div>
+        <div class="list">
+          <div class="list-item">Value proposition in plain English</div>
+          <div class="list-item">Why SmartTax exists for freelancers</div>
+        </div>
+      </div>
+      <div class="panel">
+        <div class="header-bar">Team &amp; credentials</div>
+        <div class="list">
+          <div class="list-item">Author / course / university</div>
+          <div class="list-item">Contact channel</div>
+        </div>
+      </div>
+      <div class="panel">
+        <div class="header-bar">Trust &amp; technology</div>
+        <div class="list">
+          <div class="list-item">Stack overview</div>
+          <div class="list-item">Security &amp; backups</div>
+          <div class="list-item">HMRC integration notes</div>
+        </div>
+        <div class="divider"></div>
+        <div class="list-row">
+          <div class="badge">Terms</div>
+          <div class="badge">Privacy</div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <section id="news" class="page">
+    <h1>News / Updates</h1>
+    <div class="canvas">
+      <div class="panel">
+        <div class="header-bar">Editorial planner</div>
+        <div class="grid-three">
+          <div class="stacked">
+            <div class="list-item">Featured article</div>
+            <div class="list-item note">Headline  -  Date  -  Tag</div>
+            <div class="cta">Draft outline</div>
+          </div>
+          <div class="stacked">
+            <div class="list-item">Upcoming releases</div>
+            <div class="list-item note">3 planned posts  -  statuses</div>
+            <div class="cta">Assign writer</div>
+          </div>
+          <div class="stacked">
+            <div class="list-item">Tax rule changes</div>
+            <div class="list-item note">Add sources &amp; dates</div>
+            <div class="cta">Add briefing</div>
+          </div>
+        </div>
+        <div class="divider"></div>
+        <div class="header-bar">Article list (wireframe)</div>
+        <div class="stacked">
+          <div class="list-item">
+            <div class="list-row">
+              <div class="badge">Tax changes</div>
+              <div class="badge">Ready</div>
+            </div>
+            <div class="note">Title  -  Date  -  Short excerpt  -  Read more</div>
+          </div>
+          <div class="list-item">
+            <div class="list-row">
+              <div class="badge">Feature updates</div>
+              <div class="badge">Draft</div>
+            </div>
+            <div class="note">Title  -  Date  -  Short excerpt  -  Read more</div>
+          </div>
+          <div class="list-item">
+            <div class="list-row">
+              <div class="badge">Guidance</div>
+              <div class="badge">Scheduled</div>
+            </div>
+            <div class="note">Title  -  Date  -  Short excerpt  -  Read more</div>
+          </div>
+        </div>
+        <div class="cta">View news hub</div>
+      </div>
+      <div class="panel">
+        <div class="header-bar">Subscribe</div>
+        <div class="input">
+          <span>Email for newsletter</span>
+          <div class="header-bar">input</div>
+        </div>
+        <div class="cta">Subscribe</div>
+      </div>
+    </div>
+  </section>
+
+  <section id="dashboard" class="page">
+    <h1>Tax Dashboard</h1>
+    <div class="canvas">
+      <div class="panel">
+        <div class="grid-three">
+          <div class="stacked">
+            <div class="header-bar">Estimated tax due</div>
+            <div class="chart">GBP xx,xxx</div>
+          </div>
+          <div class="stacked">
+            <div class="header-bar">Next filing deadline</div>
+            <div class="chart">Date + countdown</div>
+          </div>
+          <div class="stacked">
+            <div class="header-bar">Recent payments</div>
+            <div class="table">list of payments</div>
+          </div>
+        </div>
+        <div class="divider"></div>
+        <div class="header-bar">Quick actions</div>
+        <div class="list-row">
+          <div class="pill">Add income</div>
+          <div class="pill">Add expense</div>
+          <div class="pill">Run calculator</div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <section id="income-expenses" class="page">
+    <h1>Income &amp; Expenses</h1>
+    <div class="canvas">
+      <div class="panel">
+        <div class="list-row">
+          <div class="badge">Income</div>
+          <div class="badge">Expenses</div>
+          <div class="badge">Upload CSV</div>
+        </div>
+        <div class="table">Table of entries with edit / delete</div>
+        <div class="divider"></div>
+        <div class="grid-two">
+          <div class="stacked">
+            <div class="header-bar">Add income</div>
+            <div class="input"><span>Amount</span><div class="header-bar">input</div></div>
+            <div class="input"><span>Category</span><div class="header-bar">input</div></div>
+          </div>
+          <div class="stacked">
+            <div class="header-bar">Add expense</div>
+            <div class="input"><span>Amount</span><div class="header-bar">input</div></div>
+            <div class="input"><span>Category</span><div class="header-bar">input</div></div>
+          </div>
+        </div>
+        <div class="list-row">
+          <div class="pill">Upload receipts</div>
+          <div class="pill">Totals &amp; net profit</div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <section id="calculator" class="page">
+    <h1>Tax Calculator (Estimator)</h1>
+    <div class="canvas">
+      <div class="panel">
+        <div class="grid-two">
+          <div class="input"><span>Tax year</span><div class="header-bar">dropdown</div></div>
+          <div class="input"><span>Total income</span><div class="header-bar">input</div></div>
+          <div class="input"><span>Allowable expenses</span><div class="header-bar">input</div></div>
+          <div class="input"><span>Personal allowance</span><div class="header-bar">toggle</div></div>
+          <div class="input"><span>Student loan</span><div class="header-bar">toggle</div></div>
+          <div class="input"><span>Pension</span><div class="header-bar">toggle</div></div>
+        </div>
+        <div class="cta">Calculate estimate</div>
+      </div>
+      <div class="panel">
+        <div class="header-bar">Estimate breakdown</div>
+        <div class="list">
+          <div class="list-item">Income tax bands</div>
+          <div class="list-item">National Insurance</div>
+          <div class="list-item">Estimated payment on account</div>
+        </div>
+        <div class="divider"></div>
+        <div class="list-row">
+          <div class="badge">Save estimate</div>
+          <div class="badge">Export</div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <section id="filing" class="page">
+    <h1>Self-Assessment / Filing</h1>
+    <div class="canvas">
+      <div class="panel">
+        <div class="header-bar">Checklist</div>
+        <div class="stacked">
+          <div class="list-item">Required info [done]</div>
+          <div class="list-item">Upload evidence [done]</div>
+          <div class="list-item">Review draft [pending]</div>
+        </div>
+        <div class="divider"></div>
+        <div class="grid-two">
+          <div class="stacked">
+            <div class="header-bar">Draft preview</div>
+            <div class="table">summary</div>
+          </div>
+          <div class="stacked">
+            <div class="header-bar">Status</div>
+            <div class="list">
+              <div class="list-item"><span class="status">Draft</span></div>
+              <div class="list-item"><span class="status">Ready</span></div>
+              <div class="list-item"><span class="status">Submitted</span></div>
+            </div>
+            <div class="note">Timestamp / reference</div>
+          </div>
+        </div>
+        <div class="list-row">
+          <div class="pill">Export PDF</div>
+          <div class="pill">HMRC submission steps</div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <section id="payments" class="page">
+    <h1>Payments &amp; Records</h1>
+    <div class="canvas">
+      <div class="panel">
+        <div class="grid-two">
+          <div class="stacked">
+            <div class="header-bar">Scheduled payments</div>
+            <div class="table">items</div>
+          </div>
+          <div class="stacked">
+            <div class="header-bar">Outstanding balance</div>
+            <div class="chart">GBP xx,xxx</div>
+          </div>
+        </div>
+        <div class="divider"></div>
+        <div class="header-bar">Recent transactions</div>
+        <div class="table">list with dates &amp; amounts</div>
+        <div class="list-row">
+          <div class="pill">Download receipt</div>
+          <div class="pill">Make payment (external)</div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <section id="reports" class="page">
+    <h1>Tax History &amp; Reports</h1>
+    <div class="canvas">
+      <div class="panel">
+        <div class="list-row">
+          <div class="badge">Filter by year</div>
+          <div class="badge">Tax type</div>
+        </div>
+        <div class="grid-two">
+          <div class="chart">Visual summary</div>
+          <div class="chart">Income vs expenses</div>
+        </div>
+        <div class="divider"></div>
+        <div class="list-row">
+          <div class="pill">Export CSV</div>
+          <div class="pill">Export PDF</div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+</body>
+</html>
