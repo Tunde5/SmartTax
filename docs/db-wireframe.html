@@ -1,0 +1,435 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>SmartTax DB Wireframe</title>
+  <style>
+    :root {
+      --bg: #f8f5ee;
+      --ink: #1e1b16;
+      --muted: #6f665c;
+      --outline: #c9c1b6;
+      --card: #ffffff;
+      --accent: #14665c;
+      --mono: ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, "Liberation Mono", "Courier New", monospace;
+      --sans: "Segoe UI", "Helvetica Neue", Arial, sans-serif;
+      --shadow: 0 12px 40px rgba(0, 0, 0, 0.08);
+    }
+    * { box-sizing: border-box; }
+    body {
+      margin: 0;
+      font-family: var(--sans);
+      background: radial-gradient(circle at 20% 20%, rgba(20, 102, 92, 0.08), transparent 30%),
+                  radial-gradient(circle at 80% 10%, rgba(124, 84, 40, 0.08), transparent 26%),
+                  var(--bg);
+      color: var(--ink);
+      line-height: 1.5;
+      padding-bottom: 48px;
+    }
+    h1, h2, h3 { margin: 0 0 10px; letter-spacing: -0.01em; }
+    h1 { font-size: 28px; }
+    h2 { font-size: 20px; }
+    h3 { font-size: 15px; text-transform: uppercase; letter-spacing: 0.05em; color: var(--muted); }
+    .top {
+      position: sticky;
+      top: 0;
+      z-index: 10;
+      backdrop-filter: blur(10px);
+      background: rgba(248, 245, 238, 0.95);
+      border-bottom: 1px solid var(--outline);
+      padding: 14px 20px;
+      display: flex;
+      gap: 14px;
+      align-items: center;
+      flex-wrap: wrap;
+    }
+    .brand { font-weight: 700; }
+    nav { display: flex; gap: 10px; flex-wrap: wrap; }
+    nav a {
+      text-decoration: none;
+      color: var(--ink);
+      padding: 8px 12px;
+      border: 1px solid var(--outline);
+      border-radius: 12px;
+      background: rgba(255, 255, 255, 0.7);
+      font-size: 13px;
+      transition: all 0.12s ease;
+    }
+    nav a:hover { color: var(--accent); border-color: var(--accent); box-shadow: var(--shadow); }
+    .page {
+      padding: 26px 20px;
+      max-width: 1240px;
+      margin: 0 auto;
+    }
+    .grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
+      gap: 14px;
+      margin-top: 12px;
+    }
+    .table-box {
+      background: linear-gradient(135deg, rgba(255, 255, 255, 0.97), rgba(255, 255, 255, 0.92));
+      border: 2px dashed var(--outline);
+      border-radius: 14px;
+      padding: 12px 12px 10px;
+      box-shadow: var(--shadow);
+    }
+    .table-title {
+      font-weight: 700;
+      font-family: var(--mono);
+      font-size: 13px;
+      margin-bottom: 8px;
+    }
+    .fields { list-style: none; padding: 0; margin: 0; }
+    .fields li {
+      padding: 4px 6px;
+      margin-bottom: 4px;
+      border-radius: 8px;
+      background: #fffdfa;
+      color: var(--muted);
+      font-size: 13px;
+      border: 0;
+    }
+    .tag {
+      display: inline-block;
+      padding: 2px 8px;
+      border-radius: 999px;
+      background: rgba(20, 102, 92, 0.1);
+      color: var(--ink);
+      font-size: 11px;
+      font-family: var(--mono);
+    }
+    .rel {
+      margin-top: 8px;
+      color: var(--muted);
+      font-size: 12px;
+      font-family: var(--mono);
+    }
+    .cluster {
+      border: 1px solid var(--outline);
+      border-radius: 12px;
+      padding: 12px;
+      background: rgba(255, 255, 255, 0.65);
+    }
+    .note { font-size: 12px; color: var(--muted); margin-top: 8px; }
+    @media (max-width: 640px) {
+      .top { position: static; }
+      nav a { font-size: 12px; }
+    }
+  </style>
+</head>
+<body>
+  <header class="top">
+    <div class="brand">SmartTax DB Wireframe</div>
+    <nav>
+      <a href="#accounts">Accounts</a>
+      <a href="#content">Content</a>
+      <a href="#engagement">Engagement</a>
+      <a href="#ledger">Income/Expenses</a>
+      <a href="#calculator">Calculator</a>
+      <a href="#filing">Filing</a>
+      <a href="#payments">Payments</a>
+      <a href="#reports">Reports</a>
+    </nav>
+  </header>
+
+  <section id="accounts" class="page">
+    <h1>Accounts & Access</h1>
+    <div class="grid">
+      <div class="table-box">
+        <div class="table-title">users</div>
+        <ul class="fields">
+          <li>id (uuid, pk)</li>
+          <li>email (unique)</li>
+          <li>password_hash</li>
+          <li>name</li>
+          <li>role (user/admin)</li>
+          <li>created_at, updated_at</li>
+        </ul>
+        <div class="rel">links: sessions, ledger_entries, tax_calculations, filings</div>
+      </div>
+      <div class="table-box">
+        <div class="table-title">sessions</div>
+        <ul class="fields">
+          <li>id (uuid, pk)</li>
+          <li>user_id (fk users)</li>
+          <li>expires_at</li>
+          <li>mfa_verified (bool)</li>
+          <li>created_at, last_seen_at</li>
+        </ul>
+        <div class="rel">for sign-in, remember me</div>
+      </div>
+    </div>
+  </section>
+
+  <section id="content" class="page">
+    <h1>Content (FAQ, News, Policies)</h1>
+    <div class="grid">
+      <div class="table-box">
+        <div class="table-title">faq_categories</div>
+        <ul class="fields">
+          <li>id (pk)</li>
+          <li>name</li>
+          <li>order_index</li>
+        </ul>
+      </div>
+      <div class="table-box">
+        <div class="table-title">faq_articles</div>
+        <ul class="fields">
+          <li>id (pk)</li>
+          <li>category_id (fk faq_categories)</li>
+          <li>question</li>
+          <li>answer</li>
+          <li>version_label</li>
+          <li>updated_at</li>
+        </ul>
+        <div class="rel">for accordion answers by category</div>
+      </div>
+      <div class="table-box">
+        <div class="table-title">news_posts</div>
+        <ul class="fields">
+          <li>id (pk)</li>
+          <li>title, slug</li>
+          <li>excerpt</li>
+          <li>body</li>
+          <li>status (draft/published)</li>
+          <li>published_at</li>
+          <li>author_id (fk users)</li>
+        </ul>
+      </div>
+      <div class="table-box">
+        <div class="table-title">news_tags</div>
+        <ul class="fields">
+          <li>id (pk)</li>
+          <li>name</li>
+          <li>type (tax change/feature/guidance)</li>
+        </ul>
+      </div>
+      <div class="table-box">
+        <div class="table-title">news_post_tags</div>
+        <ul class="fields">
+          <li>post_id (fk news_posts)</li>
+          <li>tag_id (fk news_tags)</li>
+        </ul>
+        <div class="rel">many-to-many for News / Updates</div>
+      </div>
+      <div class="table-box">
+        <div class="table-title">policy_versions</div>
+        <ul class="fields">
+          <li>id (pk)</li>
+          <li>type (terms/privacy)</li>
+          <li>version_label</li>
+          <li>content</li>
+          <li>published_at</li>
+        </ul>
+        <div class="rel">shows latest Terms & Privacy pages</div>
+      </div>
+    </div>
+  </section>
+
+  <section id="engagement" class="page">
+    <h1>Support & Engagement</h1>
+    <div class="grid">
+      <div class="table-box">
+        <div class="table-title">contact_messages</div>
+        <ul class="fields">
+          <li>id (pk)</li>
+          <li>user_id (nullable fk users)</li>
+          <li>name, email</li>
+          <li>subject, message</li>
+          <li>attachment_url</li>
+          <li>status (open/closed)</li>
+          <li>created_at, responded_at</li>
+        </ul>
+      </div>
+      <div class="table-box">
+        <div class="table-title">newsletter_subscribers</div>
+        <ul class="fields">
+          <li>id (pk)</li>
+          <li>email (unique)</li>
+          <li>status (active/unsubscribed)</li>
+          <li>created_at</li>
+        </ul>
+      </div>
+    </div>
+  </section>
+
+  <section id="ledger" class="page">
+    <h1>Income & Expenses</h1>
+    <div class="cluster">
+      <div class="note">Single ledger supports income and expense entries, CSV uploads, receipts.</div>
+      <div class="grid">
+        <div class="table-box">
+          <div class="table-title">ledger_categories</div>
+          <ul class="fields">
+            <li>id (pk)</li>
+            <li>name</li>
+            <li>type (income/expense)</li>
+            <li>hmrc_box (optional)</li>
+            <li>order_index</li>
+          </ul>
+        </div>
+        <div class="table-box">
+          <div class="table-title">ledger_entries</div>
+          <ul class="fields">
+            <li>id (pk)</li>
+            <li>user_id (fk users)</li>
+            <li>category_id (fk ledger_categories)</li>
+            <li>type (income/expense)</li>
+            <li>amount</li>
+            <li>entry_date</li>
+            <li>description</li>
+            <li>source (manual/csv/receipt)</li>
+            <li>created_at</li>
+          </ul>
+          <div class="rel">supports add/edit/delete</div>
+        </div>
+        <div class="table-box">
+          <div class="table-title">receipts</div>
+          <ul class="fields">
+            <li>id (pk)</li>
+            <li>entry_id (fk ledger_entries)</li>
+            <li>file_url</li>
+            <li>uploaded_at</li>
+          </ul>
+          <div class="rel">uploads for expenses or income evidence</div>
+        </div>
+        <div class="table-box">
+          <div class="table-title">csv_imports</div>
+          <ul class="fields">
+            <li>id (pk)</li>
+            <li>user_id (fk users)</li>
+            <li>file_url</li>
+            <li>status (pending/done/failed)</li>
+            <li>rows_processed</li>
+            <li>created_at</li>
+          </ul>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <section id="calculator" class="page">
+    <h1>Tax Calculator</h1>
+    <div class="grid">
+      <div class="table-box">
+        <div class="table-title">tax_calculations</div>
+        <ul class="fields">
+          <li>id (pk)</li>
+          <li>user_id (fk users)</li>
+          <li>tax_year</li>
+          <li>total_income</li>
+          <li>allowable_expenses</li>
+          <li>personal_allowance_used (bool)</li>
+          <li>student_loan (bool)</li>
+          <li>pension (bool)</li>
+          <li>breakdown_json</li>
+          <li>created_at</li>
+        </ul>
+        <div class="rel">supports saved estimates</div>
+      </div>
+    </div>
+  </section>
+
+  <section id="filing" class="page">
+    <h1>Self-Assessment</h1>
+    <div class="grid">
+      <div class="table-box">
+        <div class="table-title">filings</div>
+        <ul class="fields">
+          <li>id (pk)</li>
+          <li>user_id (fk users)</li>
+          <li>tax_year</li>
+          <li>status (draft/ready/submitted)</li>
+          <li>draft_payload</li>
+          <li>submitted_at</li>
+          <li>reference_code</li>
+          <li>created_at, updated_at</li>
+        </ul>
+      </div>
+      <div class="table-box">
+        <div class="table-title">filing_tasks</div>
+        <ul class="fields">
+          <li>id (pk)</li>
+          <li>filing_id (fk filings)</li>
+          <li>label</li>
+          <li>status (todo/done)</li>
+          <li>order_index</li>
+        </ul>
+        <div class="rel">checklist items for filing flow</div>
+      </div>
+      <div class="table-box">
+        <div class="table-title">filing_documents</div>
+        <ul class="fields">
+          <li>id (pk)</li>
+          <li>filing_id (fk filings)</li>
+          <li>file_url</li>
+          <li>type (pdf/export/evidence)</li>
+          <li>uploaded_at</li>
+        </ul>
+      </div>
+    </div>
+  </section>
+
+  <section id="payments" class="page">
+    <h1>Payments & Records</h1>
+    <div class="grid">
+      <div class="table-box">
+        <div class="table-title">payment_schedules</div>
+        <ul class="fields">
+          <li>id (pk)</li>
+          <li>user_id (fk users)</li>
+          <li>tax_year</li>
+          <li>due_date</li>
+          <li>amount</li>
+          <li>status (planned/paid)</li>
+        </ul>
+      </div>
+      <div class="table-box">
+        <div class="table-title">payment_transactions</div>
+        <ul class="fields">
+          <li>id (pk)</li>
+          <li>user_id (fk users)</li>
+          <li>schedule_id (nullable fk payment_schedules)</li>
+          <li>paid_at</li>
+          <li>amount</li>
+          <li>method</li>
+          <li>receipt_url</li>
+        </ul>
+      </div>
+    </div>
+  </section>
+
+  <section id="reports" class="page">
+    <h1>Tax History & Reports</h1>
+    <div class="grid">
+      <div class="table-box">
+        <div class="table-title">tax_year_summaries</div>
+        <ul class="fields">
+          <li>id (pk)</li>
+          <li>user_id (fk users)</li>
+          <li>tax_year</li>
+          <li>income_total</li>
+          <li>expense_total</li>
+          <li>tax_due</li>
+          <li>generated_at</li>
+        </ul>
+        <div class="rel">feeds dashboard and report exports</div>
+      </div>
+      <div class="table-box">
+        <div class="table-title">report_exports</div>
+        <ul class="fields">
+          <li>id (pk)</li>
+          <li>user_id (fk users)</li>
+          <li>tax_year</li>
+          <li>format (csv/pdf)</li>
+          <li>file_url</li>
+          <li>created_at</li>
+        </ul>
+      </div>
+    </div>
+    <div class="note">HMRC integration omitted per current scope.</div>
+  </section>
+</body>
+</html>

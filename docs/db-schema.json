@@ -1,0 +1,319 @@
+{
+  "scope": "SmartTax core database (no HMRC integration)",
+  "tables": [
+    {
+      "name": "users",
+      "columns": [
+        "id uuid pk",
+        "email unique",
+        "password_hash",
+        "name",
+        "role enum(user,admin)",
+        "created_at",
+        "updated_at"
+      ],
+      "relations": [
+        "sessions.user_id -> users.id",
+        "ledger_entries.user_id -> users.id",
+        "tax_calculations.user_id -> users.id",
+        "filings.user_id -> users.id",
+        "payment_schedules.user_id -> users.id",
+        "payment_transactions.user_id -> users.id",
+        "tax_year_summaries.user_id -> users.id",
+        "report_exports.user_id -> users.id",
+        "news_posts.author_id -> users.id",
+        "contact_messages.user_id -> users.id"
+      ]
+    },
+    {
+      "name": "sessions",
+      "columns": [
+        "id uuid pk",
+        "user_id fk users",
+        "expires_at",
+        "mfa_verified bool",
+        "created_at",
+        "last_seen_at"
+      ],
+      "relations": [
+        "sessions.user_id -> users.id"
+      ]
+    },
+    {
+      "name": "faq_categories",
+      "columns": [
+        "id pk",
+        "name",
+        "order_index"
+      ]
+    },
+    {
+      "name": "faq_articles",
+      "columns": [
+        "id pk",
+        "category_id fk faq_categories",
+        "question",
+        "answer",
+        "version_label",
+        "updated_at"
+      ],
+      "relations": [
+        "faq_articles.category_id -> faq_categories.id"
+      ]
+    },
+    {
+      "name": "news_posts",
+      "columns": [
+        "id pk",
+        "title",
+        "slug",
+        "excerpt",
+        "body",
+        "status enum(draft,published)",
+        "published_at",
+        "author_id fk users"
+      ],
+      "relations": [
+        "news_posts.author_id -> users.id",
+        "news_post_tags.post_id -> news_posts.id"
+      ]
+    },
+    {
+      "name": "news_tags",
+      "columns": [
+        "id pk",
+        "name",
+        "type enum(tax change,feature,guidance)"
+      ],
+      "relations": [
+        "news_post_tags.tag_id -> news_tags.id"
+      ]
+    },
+    {
+      "name": "news_post_tags",
+      "columns": [
+        "post_id fk news_posts",
+        "tag_id fk news_tags"
+      ],
+      "relations": [
+        "news_post_tags.post_id -> news_posts.id",
+        "news_post_tags.tag_id -> news_tags.id"
+      ]
+    },
+    {
+      "name": "policy_versions",
+      "columns": [
+        "id pk",
+        "type enum(terms,privacy)",
+        "version_label",
+        "content",
+        "published_at"
+      ]
+    },
+    {
+      "name": "contact_messages",
+      "columns": [
+        "id pk",
+        "user_id nullable fk users",
+        "name",
+        "email",
+        "subject",
+        "message",
+        "attachment_url",
+        "status enum(open,closed)",
+        "created_at",
+        "responded_at"
+      ],
+      "relations": [
+        "contact_messages.user_id -> users.id"
+      ]
+    },
+    {
+      "name": "newsletter_subscribers",
+      "columns": [
+        "id pk",
+        "email unique",
+        "status enum(active,unsubscribed)",
+        "created_at"
+      ]
+    },
+    {
+      "name": "ledger_categories",
+      "columns": [
+        "id pk",
+        "name",
+        "type enum(income,expense)",
+        "hmrc_box nullable",
+        "order_index"
+      ]
+    },
+    {
+      "name": "ledger_entries",
+      "columns": [
+        "id pk",
+        "user_id fk users",
+        "category_id fk ledger_categories",
+        "type enum(income,expense)",
+        "amount",
+        "entry_date",
+        "description",
+        "source enum(manual,csv,receipt)",
+        "created_at"
+      ],
+      "relations": [
+        "ledger_entries.user_id -> users.id",
+        "ledger_entries.category_id -> ledger_categories.id",
+        "receipts.entry_id -> ledger_entries.id"
+      ]
+    },
+    {
+      "name": "receipts",
+      "columns": [
+        "id pk",
+        "entry_id fk ledger_entries",
+        "file_url",
+        "uploaded_at"
+      ],
+      "relations": [
+        "receipts.entry_id -> ledger_entries.id"
+      ]
+    },
+    {
+      "name": "csv_imports",
+      "columns": [
+        "id pk",
+        "user_id fk users",
+        "file_url",
+        "status enum(pending,done,failed)",
+        "rows_processed",
+        "created_at"
+      ],
+      "relations": [
+        "csv_imports.user_id -> users.id"
+      ]
+    },
+    {
+      "name": "tax_calculations",
+      "columns": [
+        "id pk",
+        "user_id fk users",
+        "tax_year",
+        "total_income",
+        "allowable_expenses",
+        "personal_allowance_used bool",
+        "student_loan bool",
+        "pension bool",
+        "breakdown_json",
+        "created_at"
+      ],
+      "relations": [
+        "tax_calculations.user_id -> users.id"
+      ]
+    },
+    {
+      "name": "filings",
+      "columns": [
+        "id pk",
+        "user_id fk users",
+        "tax_year",
+        "status enum(draft,ready,submitted)",
+        "draft_payload",
+        "submitted_at",
+        "reference_code",
+        "created_at",
+        "updated_at"
+      ],
+      "relations": [
+        "filings.user_id -> users.id",
+        "filing_tasks.filing_id -> filings.id",
+        "filing_documents.filing_id -> filings.id"
+      ]
+    },
+    {
+      "name": "filing_tasks",
+      "columns": [
+        "id pk",
+        "filing_id fk filings",
+        "label",
+        "status enum(todo,done)",
+        "order_index"
+      ],
+      "relations": [
+        "filing_tasks.filing_id -> filings.id"
+      ]
+    },
+    {
+      "name": "filing_documents",
+      "columns": [
+        "id pk",
+        "filing_id fk filings",
+        "file_url",
+        "type enum(pdf,export,evidence)",
+        "uploaded_at"
+      ],
+      "relations": [
+        "filing_documents.filing_id -> filings.id"
+      ]
+    },
+    {
+      "name": "payment_schedules",
+      "columns": [
+        "id pk",
+        "user_id fk users",
+        "tax_year",
+        "due_date",
+        "amount",
+        "status enum(planned,paid)"
+      ],
+      "relations": [
+        "payment_schedules.user_id -> users.id",
+        "payment_transactions.schedule_id -> payment_schedules.id"
+      ]
+    },
+    {
+      "name": "payment_transactions",
+      "columns": [
+        "id pk",
+        "user_id fk users",
+        "schedule_id nullable fk payment_schedules",
+        "paid_at",
+        "amount",
+        "method",
+        "receipt_url"
+      ],
+      "relations": [
+        "payment_transactions.user_id -> users.id",
+        "payment_transactions.schedule_id -> payment_schedules.id"
+      ]
+    },
+    {
+      "name": "tax_year_summaries",
+      "columns": [
+        "id pk",
+        "user_id fk users",
+        "tax_year",
+        "income_total",
+        "expense_total",
+        "tax_due",
+        "generated_at"
+      ],
+      "relations": [
+        "tax_year_summaries.user_id -> users.id"
+      ]
+    },
+    {
+      "name": "report_exports",
+      "columns": [
+        "id pk",
+        "user_id fk users",
+        "tax_year",
+        "format enum(csv,pdf)",
+        "file_url",
+        "created_at"
+      ],
+      "relations": [
+        "report_exports.user_id -> users.id"
+      ]
+    }
+  ]
+}
