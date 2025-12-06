@@ -54,11 +54,11 @@ CREATE TABLE news_posts (
   body LONGTEXT NOT NULL,
   status ENUM('draft','published') NOT NULL DEFAULT 'draft',
   published_at DATETIME,
-  author_id CHAR(36) NOT NULL,
+  user_id CHAR(36),
   PRIMARY KEY (id),
   UNIQUE KEY uq_news_slug (slug),
-  KEY fk_news_author (author_id),
-  CONSTRAINT fk_news_author FOREIGN KEY (author_id) REFERENCES users (id) ON DELETE SET NULL
+  KEY fk_news_user (user_id),
+  CONSTRAINT fk_news_user FOREIGN KEY (user_id) REFERENCES users (id) ON DELETE SET NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
 
 CREATE TABLE news_tags (

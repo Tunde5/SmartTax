@@ -71,10 +71,10 @@
         "body",
         "status enum(draft,published)",
         "published_at",
-        "author_id fk users"
+        "user_id fk users"
       ],
       "relations": [
-        "news_posts.author_id -> users.id",
+        "news_posts.user_id -> users.id",
         "news_post_tags.post_id -> news_posts.id"
       ]
     },
