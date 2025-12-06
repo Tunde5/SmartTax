@@ -131,9 +131,3 @@ Purpose: provide archived year-by-year summaries and downloadable reports
 
 - Features: filter by year, export CSV/PDF, visual summaries (simple charts for income/expenses/tax)
 
-## HMRC Integration / Accounts
-
-Purpose: let customers connect (or view status of) HMRC Making Tax Digital / other integrations.
-
-- Displays: connection status, last sync time, errors and fixes, connect/disconnect actions
-
