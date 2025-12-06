@@ -46,7 +46,7 @@ TODO
 
 + setup REACT project, using Vite + React template: show empty "hello" front page
 
-- setup react pages, simple pages with navigation menu for non-tax pages: home, about, contact, services, news, privacy policy, terms of service
++ setup react pages, simple pages with navigation menu for non-tax pages: home, about, contact, services, news, privacy policy, terms of service
 
 [PHP BACKEND TASKS]
 

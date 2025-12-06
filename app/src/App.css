@@ -1,7 +1,144 @@
-.page {
+.app {
   min-height: 100vh;
-  display: grid;
-  place-items: center;
-  background: #f5f5f5;
+  background: linear-gradient(135deg, #f6f8fb 0%, #e9eef7 100%);
   color: #0f172a;
+  padding: 2.5rem 1.5rem 3.5rem;
+}
+
+.top-bar {
+  max-width: 1100px;
+  margin: 0 auto;
+  padding: 1.5rem 1.25rem;
+  border: 1px solid #d6deeb;
+  border-radius: 16px;
+  background: #ffffffdd;
+  backdrop-filter: blur(6px);
+  display: flex;
+  align-items: center;
+  gap: 2rem;
+  flex-wrap: wrap;
+  box-shadow: 0 10px 30px rgba(15, 23, 42, 0.08);
+}
+
+.logo {
+  margin: 0;
+  font-size: 1.25rem;
+  font-weight: 700;
+  letter-spacing: 0.04em;
+}
+
+.tagline {
+  margin: 0.2rem 0 0;
+  color: #475569;
+  font-size: 0.95rem;
+}
+
+.nav-list {
+  list-style: none;
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(120px, 1fr));
+  gap: 0.5rem;
+  padding: 0;
+  margin: 0;
+}
+
+.nav-link {
+  width: 100%;
+  border: 1px solid #cbd5e1;
+  background: #fff;
+  color: #0f172a;
+  padding: 0.65rem 0.75rem;
+  border-radius: 10px;
+  font-weight: 600;
+  cursor: pointer;
+  transition: all 0.2s ease;
+  box-shadow: 0 2px 8px rgba(15, 23, 42, 0.06);
+}
+
+.nav-link:hover {
+  border-color: #0f172a;
+  transform: translateY(-1px);
+}
+
+.nav-link.active {
+  background: #0f172a;
+  color: #f8fafc;
+  border-color: #0f172a;
+  box-shadow: 0 6px 18px rgba(15, 23, 42, 0.25);
+}
+
+.layout {
+  max-width: 1100px;
+  margin: 1.5rem auto 0;
+  display: grid;
+  grid-template-columns: 3fr 1.3fr;
+  gap: 1.25rem;
+  align-items: start;
+}
+
+.card {
+  background: #fff;
+  border: 1px solid #dfe7f3;
+  border-radius: 18px;
+  padding: 1.75rem;
+  box-shadow: 0 16px 40px rgba(15, 23, 42, 0.12);
+}
+
+.eyebrow {
+  text-transform: uppercase;
+  letter-spacing: 0.08em;
+  font-size: 0.75rem;
+  color: #475569;
+  margin: 0 0 0.35rem;
+}
+
+h1 {
+  margin: 0 0 0.5rem;
+  font-size: 2rem;
+}
+
+.lede {
+  margin: 0 0 1rem;
+  color: #334155;
+  font-size: 1.05rem;
+}
+
+.points {
+  margin: 0.75rem 0 0;
+  padding-left: 1rem;
+  color: #1f2937;
+  display: grid;
+  gap: 0.4rem;
+}
+
+.info {
+  display: grid;
+  gap: 0.75rem;
+}
+
+.info-block {
+  background: #0f172a;
+  color: #e2e8f0;
+  border-radius: 14px;
+  padding: 1.25rem;
+  box-shadow: 0 12px 32px rgba(15, 23, 42, 0.3);
+}
+
+.info-block.highlight {
+  background: linear-gradient(135deg, #0f172a, #1d4ed8);
+}
+
+.info-text {
+  margin: 0.25rem 0 0;
+  color: #e2e8f0;
+}
+
+@media (max-width: 960px) {
+  .layout {
+    grid-template-columns: 1fr;
+  }
+
+  .top-bar {
+    align-items: flex-start;
+  }
 }
